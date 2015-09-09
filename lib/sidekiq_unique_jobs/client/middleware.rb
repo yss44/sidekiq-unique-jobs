@@ -30,7 +30,7 @@ module SidekiqUniqueJobs
       attr_reader :item, :worker_class, :redis_pool, :queue
 
       def unique_enabled?
-        worker_class.get_sidekiq_options['unique'] || item['unique']
+        worker_class.respond_to?(:get_sidekiq_options) && worker_class.get_sidekiq_options['unique'] || item['unique']
       end
 
       def log_duplicate_payload?
